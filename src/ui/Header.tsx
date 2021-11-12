@@ -1,6 +1,7 @@
 import styled from "@emotion/styled";
 import Link from "next/link";
 
+import db from "../../db.json";
 import IconMail from "icons/Mail";
 import IconLinkedIn from "icons/LinkedIn";
 import IconResume from "icons/Resume";
@@ -13,7 +14,7 @@ export default function Header(): JSX.Element {
   return (
     <HeadBar>
       <Link href="/">
-        <LogoTitle>Mahima Bhutani</LogoTitle>
+        <LogoTitle>{db.title}</LogoTitle>
       </Link>
       <nav>
         <NavBarList>

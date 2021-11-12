@@ -2,11 +2,12 @@ import styled from "@emotion/styled";
 import { IconButton } from "components/Button";
 import IconDown from "icons/Down";
 import { Color } from "styles";
+import db from "../../db.json";
 
 export default function Footer(): JSX.Element {
   return (
     <Container>
-      © Mahima Bhutani • <a href="mailto:mahima@bhutani.design">Contact</a>
+      © {db.title} • <a href="mailto:mahima@bhutani.design">Contact</a>
       <ScrollToTop
         onClick={() => {
           window.scrollTo({ top: 0 });

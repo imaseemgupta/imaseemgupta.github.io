@@ -6,6 +6,7 @@ import Header from "ui/Header";
 import About from "ui/About";
 import Projects from "ui/Projects";
 import Footer from "ui/Footer";
+import db from "../../db.json";
 
 import type { GetStaticProps, InferGetStaticPropsType } from "next";
 
@@ -36,12 +37,12 @@ export const getStaticProps: GetStaticProps<{
 };
 
 function Meta(): JSX.Element {
-  const title = "Aseem Gupta";
+  const title = db.title;
   return (
     <Head>
       <title>{title}</title>
       <meta property="og:title" content={title} />
-      <meta property="og:description" content={"Webfolio of a marketeer."} />
+      <meta property="og:description" content={db.description} />
       <meta property="og:type" content="website" />
       <meta property="og:url" content="https://aseemgupta.com" />
       <meta
