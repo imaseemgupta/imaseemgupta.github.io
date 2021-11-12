@@ -35,17 +35,14 @@ export const getStaticProps: GetStaticProps<{
 };
 
 function Meta(): JSX.Element {
-  const title = "Mahima Bhutani";
+  const title = "Aseem Gupta";
   return (
     <Head>
       <title>{title}</title>
       <meta property="og:title" content={title} />
-      <meta
-        property="og:description"
-        content={"Portfolio of a UX/UI Designer."}
-      />
+      <meta property="og:description" content={"Webfolio of a marketeer."} />
       <meta property="og:type" content="website" />
-      <meta property="og:url" content="https://bhutani.design" />
+      <meta property="og:url" content="https://aseemgupta.com" />
       <meta
         property="og:image"
         content="https://bhutani.design/images/profile.jpeg"
