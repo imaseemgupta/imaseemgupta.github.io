@@ -9,18 +9,19 @@ import { capitalise } from "helpers/tags";
 import { Color } from "styles";
 
 export default function Projects({
+  id = "blog",
+  title = "Blog",
   projects,
 }: {
+  id?: string;
+  title?: string;
   projects: Project[];
 }): JSX.Element {
   const { filteredProjects, toggleTag, renderedFilterRow } =
     useFilterRow(projects);
   return (
-    <Section
-      id="projects"
-      style={{ backgroundColor: Color.Background_Primary }}
-    >
-      <SubHeading>Projects</SubHeading>
+    <Section id={id} style={{ backgroundColor: Color.Background_Primary }}>
+      <SubHeading>{title}</SubHeading>
       {renderedFilterRow}
       {filteredProjects.length > 0 ? (
         <ProjectGrid>
@@ -30,7 +31,7 @@ export default function Projects({
         </ProjectGrid>
       ) : (
         <Paragraph>
-          No projects match the filters. Try with different filters.
+          No content match the filters. Try with different filters.
         </Paragraph>
       )}
     </Section>
@@ -45,7 +46,7 @@ function ProjectCard({
   tags = [],
   toggleTag,
 }: Project & { toggleTag: (tag: string) => void }): JSX.Element {
-  const linkHref = "/project/" + id;
+  const linkHref = "/blog/" + id;
 
   return (
     <Card>

@@ -1,12 +1,10 @@
 import { useCallback, useState } from "react";
 import type { Project } from "./typeDefinitions";
 
-export function extractTagsFromProjects(projects: Project[]): string[] {
+export function extractTagsFromItems(items: Project[]): string[] {
   return [
     ...new Set(
-      projects.flatMap((project) =>
-        (project.tags || []).map((tag) => tag.toLowerCase())
-      )
+      items.flatMap((item) => (item.tags || []).map((tag) => tag.toLowerCase()))
     ),
   ];
 }

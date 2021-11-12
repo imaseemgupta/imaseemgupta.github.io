@@ -5,14 +5,14 @@ import {
   isContainTag,
   capitalise,
   useTags,
-  extractTagsFromProjects,
+  extractTagsFromItems,
 } from "../helpers/tags";
 
 import type { Project } from "helpers/typeDefinitions";
 
 export default function useFilterRow(projects: Project[]) {
   const { selectedTags, toggleTag } = useTags();
-  const tags = extractTagsFromProjects(projects);
+  const tags = extractTagsFromItems(projects);
 
   const filteredProjects = useMemo(
     () => filterProjectsWithSelectedTag(projects, selectedTags),
@@ -33,7 +33,7 @@ function filterProjectsWithSelectedTag(
   return selectedTags.length > 0
     ? projects.filter((project) =>
         // For AND use `every`; for OR use `some`
-        selectedTags.every((selectedTag) =>
+        selectedTags.some((selectedTag) =>
           isContainTag(project.tags || [], selectedTag)
         )
       )

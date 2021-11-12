@@ -1,7 +1,7 @@
 import Head from "next/head";
 
-import type { Project } from "helpers/typeDefinitions";
-import { getAllProjects } from "helpers/getProjects";
+import type { Blog } from "helpers/typeDefinitions";
+import { getAllBlogs } from "helpers/getBlog";
 import Header from "ui/Header";
 import About from "ui/About";
 import Projects from "ui/Projects";
@@ -10,26 +10,27 @@ import Footer from "ui/Footer";
 import type { GetStaticProps, InferGetStaticPropsType } from "next";
 
 export default function Home({
-  projects,
+  blogs,
 }: InferGetStaticPropsType<typeof getStaticProps>) {
   return (
     <>
       <Meta />
       <Header />
       <About />
-      <Projects projects={projects} />
+      <Projects projects={blogs} />
+
       <Footer />
     </>
   );
 }
 
 export const getStaticProps: GetStaticProps<{
-  projects: Project[];
+  blogs: Blog[];
 }> = async () => {
-  const projects = getAllProjects();
+  const blogs = getAllBlogs();
   return {
     props: {
-      projects,
+      blogs,
     },
   };
 };

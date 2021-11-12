@@ -4,7 +4,7 @@ import Header from "ui/Header";
 import Markdown from "ui/Markdown";
 import Footer from "ui/Footer";
 import Siblings from "ui/Siblings";
-import { getAllProjects, getProject } from "helpers/getProjects";
+import { getAllBlogs, getBlog } from "helpers/getBlog";
 import { HeroSection } from "components/layout";
 import { Tag } from "components/Filters";
 
@@ -14,23 +14,23 @@ import type {
   GetStaticProps,
   InferGetStaticPropsType,
 } from "next";
-import type { Project } from "helpers/typeDefinitions";
+import type { Blog } from "helpers/typeDefinitions";
 import styled from "@emotion/styled";
 import { Color } from "styles";
 import { capitalise } from "helpers/tags";
 
 export default function ProjectPage({
-  project,
+  data,
   content,
   next,
   prev,
 }: InferGetStaticPropsType<typeof getStaticProps>): JSX.Element {
   return (
     <>
-      <Meta {...project} />
+      <Meta {...data} />
       <Header />
-      <HeroImage project={project} />
-      <Markdown markdown={content} project={project} />
+      <HeroImage project={data} />
+      <Markdown markdown={content} project={data} />
       <Siblings next={next} prev={prev} />
       <Footer />
     </>
@@ -41,7 +41,7 @@ function HeroImage({
   project,
   style,
 }: {
-  project: Project;
+  project: Blog;
   style?: CSSProperties;
 }): JSX.Element {
   const { image, tags = [] } = project;
@@ -77,20 +77,20 @@ const CustomTag = styled(Tag)`
 `;
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const projects = getAllProjects();
-  const paths = projects.map(({ id }) => `/project/${id}`);
+  const blogs = getAllBlogs();
+  const paths = blogs.map(({ id }) => `/blog/${id}`);
   return { paths, fallback: false };
 };
 
 export const getStaticProps: GetStaticProps<{
-  project: Project;
+  data: Blog;
   content: string;
-  next: Project;
-  prev: Project;
+  next: Blog;
+  prev: Blog;
 }> = async ({ params }) => {
-  const projectName = params?.id as string;
+  const id = params?.id as string;
   return {
-    props: getProject(projectName),
+    props: getBlog(id),
   };
 };
 
@@ -99,7 +99,7 @@ function Meta({
   id: projectId,
   description = "Portfolio of Mahima Bhutani.",
   image,
-}: Project): JSX.Element {
+}: Blog): JSX.Element {
   const siteName = "Mahima Bhutani";
   const domainUrl = "https://bhutani.design";
   const imageUrl = image
