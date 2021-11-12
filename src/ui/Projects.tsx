@@ -1,5 +1,4 @@
 import Link from "next/link";
-import Image from "next/image";
 import styled from "@emotion/styled";
 // import { Color } from "styles";
 import { Section } from "components/layout";
@@ -52,12 +51,12 @@ function ProjectCard({
     <Card>
       <Link href={linkHref}>
         <CardImage>
-          <Image
+          <img
             src={image}
-            layout="fill"
-            objectFit="cover"
             alt={name}
-            loading="eager"
+            style={{
+              objectFit: "cover",
+            }}
           />
         </CardImage>
       </Link>
