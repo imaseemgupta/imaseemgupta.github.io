@@ -7,10 +7,9 @@ import {
   useTags,
   extractTagsFromItems,
 } from "../helpers/tags";
+import { BaseItem } from "helpers/typeDefinitions";
 
-type BaseTags = { tags?: string[] };
-
-export default function useFilterRow<T extends BaseTags>(items: T[]) {
+export default function useFilterRow<T extends BaseItem>(items: T[]) {
   const { selectedTags, toggleTag } = useTags();
   const tags = extractTagsFromItems(items);
 
@@ -26,7 +25,7 @@ export default function useFilterRow<T extends BaseTags>(items: T[]) {
   return { filteredItems, toggleTag, renderedFilterRow };
 }
 
-function filterProjectsWithSelectedTag<T extends BaseTags>(
+function filterProjectsWithSelectedTag<T extends BaseItem>(
   items: T[],
   selectedTags: string[]
 ): T[] {

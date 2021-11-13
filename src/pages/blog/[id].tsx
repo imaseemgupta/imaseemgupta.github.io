@@ -4,7 +4,7 @@ import Footer from "ui/Footer";
 import Siblings from "ui/Siblings";
 import HeroImage from "ui/HeroImage";
 import { getAllBlogs, getBlog, cleanupBlog } from "helpers/blog";
-import Meta from "components/Meta";
+import Meta from "components/MetaHeader";
 
 import type {
   GetStaticPaths,
