@@ -1,19 +1,16 @@
-export interface Project {
-  order?: number;
+export interface BaseItem {
   id: string;
   name: string;
-  image: string;
+  tags?: string[];
   description?: string;
+  image: string;
+}
+export interface Project extends BaseItem {
+  order?: number;
   logo?: string;
   accent?: string;
-  tags?: string[];
 }
 
-export interface Blog {
-  id: string;
-  name: string;
-  image: string;
+export interface Blog extends BaseItem {
   date: string;
-  description?: string;
-  tags?: string[];
 }

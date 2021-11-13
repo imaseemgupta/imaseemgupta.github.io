@@ -1,35 +1,46 @@
+import { useRouter } from "next/router";
 import styled from "@emotion/styled";
 import Link from "next/link";
-import type { Project } from "helpers/typeDefinitions";
+import type { BaseItem } from "helpers/typeDefinitions";
 import IconDown from "icons/Down";
 import IconGrid from "icons/Grid";
 import { Color } from "styles";
 
-export default function Siblings({
+const ID_PARAM = "[id]";
+
+export default function Siblings<T extends BaseItem>({
   next,
   prev,
+  allItemsText,
+  allItemsLink,
 }: {
-  next: Project;
-  prev: Project;
+  next: T;
+  prev: T;
+  allItemsText: string;
+  allItemsLink: string;
 }): JSX.Element {
+  const { route } = useRouter();
+  const nextUrl = route.replace(ID_PARAM, next.id);
+  const prevUrl = route.replace(ID_PARAM, next.id);
+
   return (
     <Container id="siblings">
-      <Link href={"/project/" + prev.id}>
+      <Link href={prevUrl}>
         <a id="previous">
           <IconDown />
           <br />
           {prev.name}
         </a>
       </Link>
-      <Link href={"/#projects"}>
+      <Link href={allItemsLink}>
         <a id="home">
           <IconGrid />
           <br />
-          {"All projects"}
+          {allItemsText}
         </a>
       </Link>
 
-      <Link href={"/project/" + next.id}>
+      <Link href={nextUrl}>
         <a id="next">
           <IconDown />
           <br />
@@ -48,6 +59,11 @@ const Container = styled.section`
   max-width: 800px;
   margin: auto;
   padding: 2em 0;
+
+  #next,
+  #previous {
+    flex: 1;
+  }
 
   svg {
     fill: ${Color.Accent};

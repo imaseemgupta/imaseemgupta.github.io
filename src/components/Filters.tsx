@@ -8,36 +8,36 @@ import {
   extractTagsFromItems,
 } from "../helpers/tags";
 
-import type { Project } from "helpers/typeDefinitions";
+type BaseTags = { tags?: string[] };
 
-export default function useFilterRow(projects: Project[]) {
+export default function useFilterRow<T extends BaseTags>(items: T[]) {
   const { selectedTags, toggleTag } = useTags();
-  const tags = extractTagsFromItems(projects);
+  const tags = extractTagsFromItems(items);
 
-  const filteredProjects = useMemo(
-    () => filterProjectsWithSelectedTag(projects, selectedTags),
-    [projects, selectedTags]
+  const filteredItems = useMemo(
+    () => filterProjectsWithSelectedTag<T>(items, selectedTags),
+    [items, selectedTags]
   );
 
   const renderedFilterRow = (
     <Filters tags={tags} selectedTags={selectedTags} toggleTag={toggleTag} />
   );
 
-  return { filteredProjects, toggleTag, renderedFilterRow };
+  return { filteredItems, toggleTag, renderedFilterRow };
 }
 
-function filterProjectsWithSelectedTag(
-  projects: Project[],
+function filterProjectsWithSelectedTag<T extends BaseTags>(
+  items: T[],
   selectedTags: string[]
-): Project[] {
+): T[] {
   return selectedTags.length > 0
-    ? projects.filter((project) =>
+    ? items.filter((project) =>
         // For AND use `every`; for OR use `some`
         selectedTags.some((selectedTag) =>
           isContainTag(project.tags || [], selectedTag)
         )
       )
-    : projects;
+    : items;
 }
 
 export function Filters({

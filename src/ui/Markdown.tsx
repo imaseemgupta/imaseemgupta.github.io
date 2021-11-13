@@ -3,18 +3,17 @@ import gfm from "remark-gfm";
 import styled from "@emotion/styled";
 
 import type { CSSProperties } from "react";
-import type { Project } from "helpers/typeDefinitions";
 import { Color } from "styles";
 
 export default function Markdown({
   markdown,
-  project,
+  accent,
 }: {
   markdown: string;
-  project: Project;
+  accent?: string;
 }) {
   return (
-    <Container style={{ "--accent": project.accent } as CSSProperties}>
+    <Container style={{ "--accent": accent } as CSSProperties}>
       <main>
         <ReactMarkdown allowDangerousHtml plugins={[gfm]} children={markdown} />
       </main>

@@ -2,9 +2,6 @@ import styled from "@emotion/styled";
 import Link from "next/link";
 
 import db from "../../db.json";
-import IconMail from "icons/Mail";
-import IconLinkedIn from "icons/LinkedIn";
-import IconResume from "icons/Resume";
 import { Color } from "styles";
 
 import type { PropsWithChildren } from "react";
@@ -18,18 +15,12 @@ export default function Header(): JSX.Element {
       </Link>
       <nav>
         <NavBarList>
-          <NavItemWithLink href="/MahimaBhutani_UXDesigner_Resume.pdf">
-            <IconResume />
-            <span className="linkText">Resume</span>
-          </NavItemWithLink>
-          <NavItemWithLink href="https://www.linkedin.com/in/mahimabhutani/">
-            <IconLinkedIn />
-            <span className="linkText">LinkedIn</span>
-          </NavItemWithLink>
-          <NavItemWithLink href="mailto:mahima@bhutani.design">
-            <IconMail />
-            <span className="linkText">Mail</span>
-          </NavItemWithLink>
+          {db.links.map(({ title, url, icon }) => (
+            <NavItemWithLink key={title} href={url}>
+              <i className={icon} />
+              <span className="linkText">{title}</span>
+            </NavItemWithLink>
+          ))}
         </NavBarList>
       </nav>
     </HeadBar>
@@ -120,10 +111,19 @@ const NavBarItem = styled.li`
     justify-content: flex-start;
   }
 
+  i {
+    margin: 0 0.5em;
+    transition: transform ease 0.3s;
+  }
+
   &:hover,
   a:hover {
     color: ${Color.Text_Primary};
     fill: ${Color.Text_Primary};
+
+    i {
+      transform: scale(1.5);
+    }
   }
 
   svg {

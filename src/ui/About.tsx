@@ -1,23 +1,43 @@
+import TextTransition, { presets } from "react-text-transition";
+import db from "../../db.json";
 import { HeroSection } from "components/layout";
 import { Heading, SubHeading, Paragraph } from "components/typography";
 import { Color } from "styles";
+import { useEffect, useState } from "react";
+
+const TIMER = 3_000;
 
 export default function About(): JSX.Element {
+  const { heading, content } = db.about;
   return (
     <HeroSection id="about">
-      <Heading>Hi, I'm Mahima</Heading>
-      <SubHeading style={{ color: Color.Accent }}>UX/UI Designer</SubHeading>
-      <Paragraph>
-        I am passionate about using UX/UI and IxD to design user-friendly
-        products, environments and systems. I use my skills in user research,
-        front end development, user testing, prototyping and heuristic
-        evaluation to implement our client’s vision. I love solving problems and
-        tackling new challenges. I look to create synergies and cohesion in
-        teams to bring out the best performance and exceed expectations.
-      </Paragraph>
-      <Paragraph>
-        I am skilled with Figma, Sketch, Adobe XD and InVision.
-      </Paragraph>
+      <Heading>{heading}</Heading>
+      <SubHead />
+      {content.map((text) => (
+        <Paragraph key={text}>{text}</Paragraph>
+      ))}
     </HeroSection>
+  );
+}
+
+function SubHead(): JSX.Element {
+  const { subHeading: text } = db.about;
+  const [currentIndex, setIndex] = useState(0);
+  const currentText = text[currentIndex] || "";
+
+  useEffect(() => {
+    if (text.length <= 1) return;
+
+    const interval = setInterval(
+      () => setIndex((prev) => (prev + 1) % text.length),
+      TIMER
+    );
+    return () => clearInterval(interval);
+  }, [text]);
+
+  return (
+    <SubHeading style={{ color: Color.Accent }}>
+      <TextTransition text={currentText} springConfig={presets.wobbly} />
+    </SubHeading>
   );
 }

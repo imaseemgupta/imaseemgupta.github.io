@@ -1,34 +1,39 @@
 import Link from "next/link";
 import styled from "@emotion/styled";
-// import { Color } from "styles";
 import { Section } from "components/layout";
 import { SubHeading, Paragraph, Heading } from "components/typography";
 import useFilterRow from "components/Filters";
-import { Project } from "helpers/typeDefinitions";
 import { capitalise } from "helpers/tags";
 import { Color } from "styles";
+import type { BaseItem } from "helpers/typeDefinitions";
 
-export default function Projects({
-  id = "blog",
-  title = "Blog",
-  projects,
+export default function GridSection<T extends BaseItem>({
+  id,
+  title,
+  items,
+  baseUrl,
 }: {
-  id?: string;
-  title?: string;
-  projects: Project[];
+  id: string;
+  title: string;
+  items: T[];
+  baseUrl: string;
 }): JSX.Element {
-  const { filteredProjects, toggleTag, renderedFilterRow } =
-    useFilterRow(projects);
+  const { filteredItems, toggleTag, renderedFilterRow } = useFilterRow(items);
   return (
     <Section id={id} style={{ backgroundColor: Color.Background_Primary }}>
       <SubHeading>{title}</SubHeading>
       {renderedFilterRow}
-      {filteredProjects.length > 0 ? (
-        <ProjectGrid>
-          {filteredProjects.map((project) => (
-            <ProjectCard {...project} key={project.id} toggleTag={toggleTag} />
+      {filteredItems.length > 0 ? (
+        <ItemGrid>
+          {filteredItems.map((item) => (
+            <GridCard
+              {...item}
+              key={item.id}
+              toggleTag={toggleTag}
+              baseUrl={baseUrl}
+            />
           ))}
-        </ProjectGrid>
+        </ItemGrid>
       ) : (
         <Paragraph>
           No content match the filters. Try with different filters.
@@ -38,15 +43,16 @@ export default function Projects({
   );
 }
 
-function ProjectCard({
+function GridCard<T extends BaseItem>({
   id,
   name,
   image,
   description,
   tags = [],
+  baseUrl,
   toggleTag,
-}: Project & { toggleTag: (tag: string) => void }): JSX.Element {
-  const linkHref = "/blog/" + id;
+}: T & { baseUrl: string; toggleTag: (tag: string) => void }): JSX.Element {
+  const linkHref = baseUrl + id;
 
   return (
     <Card>
@@ -78,7 +84,9 @@ function ProjectCard({
         {tags.length > 0 ? (
           <CardText>
             {tags.map((tag) => (
-              <a onClick={() => toggleTag(tag)}>#{capitalise(tag)} </a>
+              <a key={tag} onClick={() => toggleTag(tag)}>
+                #{capitalise(tag)}{" "}
+              </a>
             ))}
           </CardText>
         ) : null}
@@ -87,7 +95,7 @@ function ProjectCard({
   );
 }
 
-const ProjectGrid = styled.div`
+const ItemGrid = styled.div`
   display: grid;
   gap: 2rem;
   margin-top: 2em;
