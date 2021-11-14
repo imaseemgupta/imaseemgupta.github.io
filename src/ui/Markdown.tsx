@@ -8,13 +8,16 @@ import { Color } from "styles";
 export default function Markdown({
   markdown,
   accent,
+  caption,
 }: {
   markdown: string;
   accent?: string;
+  caption?: string;
 }) {
   return (
     <Container style={{ "--accent": accent } as CSSProperties}>
       <main>
+        {caption ? <small>{caption}</small> : null}
         <ReactMarkdown allowDangerousHtml plugins={[gfm]} children={markdown} />
       </main>
     </Container>
@@ -86,7 +89,7 @@ const Container = styled.section`
     }
 
     h1 {
-      margin-top: 2em;
+      margin-top: 1em;
       font-size: 2.5em;
       font-weight: bold;
     }
@@ -115,6 +118,10 @@ const Container = styled.section`
 
     p {
       margin-bottom: 1em;
+    }
+    small {
+      color: ${Color.Text_Disabled};
+      font-size: 0.9em;
     }
   }
 `;

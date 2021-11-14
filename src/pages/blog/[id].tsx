@@ -5,6 +5,7 @@ import Siblings from "ui/Siblings";
 import HeroImage from "ui/HeroImage";
 import { getAllBlogs, getBlog, cleanupBlog } from "helpers/blog";
 import Meta from "components/MetaHeader";
+import db from "../../../db.json";
 
 import type {
   GetStaticPaths,
@@ -19,7 +20,10 @@ export default function Blog({
   next,
   prev,
 }: InferGetStaticPropsType<typeof getStaticProps>): JSX.Element {
-  const { id, name, image, tags, description } = data;
+  const { id, name, image, tags, description, date } = data;
+  const caption = `Author: ${db.title} | Published: ${new Date(
+    date
+  ).toLocaleDateString()}`;
   return (
     <>
       <Meta
@@ -30,7 +34,7 @@ export default function Blog({
       />
       <Header />
       <HeroImage tags={tags} image={image} />
-      <Markdown markdown={content} />
+      <Markdown markdown={content} caption={caption} />
       <Siblings
         next={next}
         prev={prev}

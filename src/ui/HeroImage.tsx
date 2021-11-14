@@ -24,11 +24,13 @@ export default function HeroImage<
         height: "70vh",
       }}
     >
-      <TagsContainer>
-        {tags.map((tag) => (
-          <CustomTag key={tag}>{capitalise(tag)}</CustomTag>
-        ))}
-      </TagsContainer>
+      {tags.length > 1 ? (
+        <TagsContainer>
+          {tags.map((tag) => (
+            <CustomTag key={tag}>{capitalise(tag)}</CustomTag>
+          ))}
+        </TagsContainer>
+      ) : null}
     </HeroSection>
   );
 }

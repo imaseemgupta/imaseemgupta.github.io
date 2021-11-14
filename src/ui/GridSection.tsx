@@ -57,15 +57,7 @@ function GridCard<T extends BaseItem>({
   return (
     <Card>
       <Link href={linkHref}>
-        <CardImage>
-          <img
-            src={image}
-            alt={name}
-            style={{
-              objectFit: "cover",
-            }}
-          />
-        </CardImage>
+        <CardImage style={{ backgroundImage: `url("${image}")` }} />
       </Link>
       <CardData>
         <Link href={linkHref}>
@@ -128,6 +120,8 @@ const CardImage = styled.div`
   height: 300px;
   position: relative;
   cursor: pointer;
+  background-position: center;
+  background-size: cover;
 `;
 
 const CardData = styled.div`

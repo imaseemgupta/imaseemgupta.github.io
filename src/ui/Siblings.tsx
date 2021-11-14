@@ -58,7 +58,7 @@ const Container = styled.section`
   align-items: center;
   max-width: 800px;
   margin: auto;
-  padding: 2em 0;
+  padding: 2em 1em;
 
   #next,
   #previous {
